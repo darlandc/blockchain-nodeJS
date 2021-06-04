@@ -11,8 +11,14 @@ describe('Block Test', () => {
     });
 
     it('should create a Block instance correctly', () => {
-        const block = new Block;
-        console.log(block);
+        const block = new Block('8787', '892UEOJ389UEWRAR9', '328U48EIROSRUOISUR', '100');
+        console.log(block.toString());
+        console.log(Block.genesis().toString());
+
+        const firstBlock = Block.mineBlock(Block.genesis(), '$500');
+
+        console.log(firstBlock.toString());
+
         expect(block).not.toBeFalsy();
     });
 })

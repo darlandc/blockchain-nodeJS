@@ -14,11 +14,18 @@ describe('Block Test', () => {
         const block = new Block('8787', '892UEOJ389UEWRAR9', '328U48EIROSRUOISUR', '100');
         console.log(block.toString());
         console.log(Block.genesis().toString());
-
         const firstBlock = Block.mineBlock(Block.genesis(), '$500');
-
         console.log(firstBlock.toString());
-
         expect(block).not.toBeFalsy();
     });
+
+    it('should set data to match the input', ()=> {
+        expect(block.data).toEqual(data);
+    });
+
+
+    it('should set lastHash to match the hash of the last Block', ()=> {
+        expect(block.lastHash).toEqual(lastBlock.hash);
+    });
+
 })

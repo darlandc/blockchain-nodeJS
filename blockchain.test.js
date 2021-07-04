@@ -3,35 +3,41 @@ const Block = require("./block");
 
 describe("BlockChain Test", () => {
 
-  let bc;
-  let bc_valid;
+  let firstBlockChain;
+  let firstBlockChain_valid;
   let lastBlock;
 
   beforeEach(() => {
-    bc = new BlockChain();
-    blockChainValid = new BlockChain();
+    firstBlockChain = new BlockChain();
+    secondBlockChain = new BlockChain();
     lastBlock = Block.genesis();
   });
 
   it("should start with genesis block", () => {
-    expect(bc.chain[0]).toEqual(Block.genesis());
+    expect(firstBlockChain.chain[0]).toEqual(Block.genesis());
   });
 
   it("should adds a new block", () => {
     const data = "index.html";
-    bc.addBlock(data);
-    expect(bc.chain[bc.chain.length - 1].data).toEqual(data);
+    firstBlockChain.addBlock(data);
+    expect(firstBlockChain.chain[firstBlockChain.chain.length - 1].data).toEqual(data);
   });
 
   it('should validate a chain', () => {
-    blockChainValid.addBlock('$1000');
-    expect(bc.isValidChain(blockChainValid.chain)).toBe(true);
+    secondBlockChain.addBlock('$1000');
+    expect(firstBlockChain.isValidChain(secondBlockChain.chain)).toBe(true);
   });
 
   it('should invalidate a chain with a genesis block corrupted', () => {
-    blockChainValid.chain[0] = "0U$";
-    blockChainValid.addBlock('00000');
-    expect(bc.isValidChain(blockChainValid.chain)).toBe(false);
+    secondBlockChain.chain[0] = "0U$";
+    secondBlockChain.addBlock('00000');
+    expect(firstBlockChain.isValidChain(secondBlockChain.chain)).toBe(false);
   });
+
+  it('invalidates a corrupt chain', ()=> {
+    secondBlockChain.addBlock('200U$');
+    secondBlockChain.chain[1].data = '0$';
+    expect(firstBlockChain.isValidChain(secondBlockChain.chain)).toBe(false);
+  })
 
 });

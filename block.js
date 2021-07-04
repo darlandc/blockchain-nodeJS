@@ -17,10 +17,11 @@ class Block {
   }
 
   static genesis() {
-    return new this('Genesis time', '----', 'UDISHF9EIK', []);
+    return new this('Genesis time', '49e6951e9ae85a3fede3962f39d5c00a968b0395749ce9a79f6dc98df54c19a3', '398985ebdb4cf5857d7a30ce4f4e34b49f6b7d69d4179bbebc4848ae36abc337', []);
   }
 
   static mineBlock(lastBlock, data) {
+    console.log('PASSOU AQUI', 999)
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
     const hash = Block.hash(timestamp, lastHash, data);
@@ -30,6 +31,11 @@ class Block {
 
   static hash(timesTamp, lastHash, data){
     return SHA256(`${timesTamp}${lastHash}${data}`).toString();
+  }
+
+  static blockHash(block){
+    const { timesTamp, lastHash, data } = block;
+    return Block.hash(timesTamp, lastHash, data);
   }
 
 

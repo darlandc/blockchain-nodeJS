@@ -2,11 +2,15 @@ const BlockChain = require("./blockchain");
 const Block = require("./block");
 
 describe("BlockChain Test", () => {
-    
+
   let bc;
+  let bc_valid;
+  let lastBlock;
 
   beforeEach(() => {
     bc = new BlockChain();
+    blockChainValid = new BlockChain();
+    lastBlock = Block.genesis();
   });
 
   it("should start with genesis block", () => {
@@ -18,5 +22,9 @@ describe("BlockChain Test", () => {
     bc.addBlock(data);
     expect(bc.chain[bc.chain.length - 1].data).toEqual(data);
   });
+
+  it('should validate a chain', () => {
+    blockChainValid.addBlock('$1000');
+    expect(bc.isValidChain(blockChainValid.chain)).toBe(true);
+  })
 });
-    

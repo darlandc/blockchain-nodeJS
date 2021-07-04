@@ -26,5 +26,12 @@ describe("BlockChain Test", () => {
   it('should validate a chain', () => {
     blockChainValid.addBlock('$1000');
     expect(bc.isValidChain(blockChainValid.chain)).toBe(true);
-  })
+  });
+
+  it('should invalidate a chain with a genesis block corrupted', () => {
+    blockChainValid.chain[0] = "0U$";
+    blockChainValid.addBlock('00000');
+    expect(bc.isValidChain(blockChainValid.chain)).toBe(false);
+  });
+
 });

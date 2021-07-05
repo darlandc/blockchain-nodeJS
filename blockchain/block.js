@@ -17,7 +17,7 @@ class Block {
   }
 
   static genesis() {
-    return new this('Genesis time', '49e6951e9ae85a3fede3962f39d5c00a968b0395749ce9a79f6dc98df54c19a3', '398985ebdb4cf5857d7a30ce4f4e34b49f6b7d69d4179bbebc4848ae36abc337', []);
+    return new this(new Date(), 'GENESIS', '398985ebdb4cf5857d7a30ce4f4e34b49f6b7d69d4179bbebc4848ae36abc337', [ null ]);
   }
 
   static mineBlock(lastBlock, data) {

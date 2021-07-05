@@ -1,6 +1,7 @@
 const Block = require('./block');
 
 class BlockChain {
+
     constructor() {
         this.chain = [Block.genesis()];
     }
@@ -13,17 +14,24 @@ class BlockChain {
 
     isValidChain(chain) {
         if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
-        
 
         for (let i = 1; i < chain.length; i++) {
             const block = chain[i];
-            const lastBlock = chain[i-1]
+            const lastBlock = chain[i - 1]
             if (block && block.lastHash !== lastBlock.hash || block && block.hash !== Block.blockHash(block)) {
                 return false;
             }
         }
         return true;
+    }
 
+    replaceChain(newChain) {
+        if (newChain.length <= this.chain.length) {
+            return
+        } else if (!this.isValidChain(newChain)) {
+            return
+        }
+        this.chain = newChain;
     }
 
 }

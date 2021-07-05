@@ -1,4 +1,4 @@
-const BlockChain = require("./blockchain");
+const BlockChain = require("./index");
 const Block = require("./block");
 
 describe("BlockChain Test", () => {
@@ -34,10 +34,28 @@ describe("BlockChain Test", () => {
     expect(firstBlockChain.isValidChain(secondBlockChain.chain)).toBe(false);
   });
 
-  it('invalidates a corrupt chain', ()=> {
+  it('invalidates a corrupt chain', () => {
     secondBlockChain.addBlock('200U$');
     secondBlockChain.chain[1].data = '0$';
     expect(firstBlockChain.isValidChain(secondBlockChain.chain)).toBe(false);
+  });
+
+  it('doesnt replace a chain with one less or equal length', () => {
+    firstBlockChain.addBlock('200U$');
+    firstBlockChain.replaceChain(firstBlockChain.chain);
+    expect(firstBlockChain.chain).not.toEqual(secondBlockChain.chain);
+  });
+
+  it('should replace a chain whit a valid chain', () => {
+    secondBlockChain.addBlock('200u$');
+    firstBlockChain.replaceChain(secondBlockChain.chain);
+    expect(firstBlockChain.chain).toEqual(secondBlockChain.chain);
+  });
+
+  it('shouldnt replace a chain with one or less or equal length', () => {
+    firstBlockChain.addBlock('500U$');
+    firstBlockChain.replaceChain(secondBlockChain.chain);
+    expect(firstBlockChain.chain).not.toEqual(secondBlockChain.chain);
   })
 
 });
